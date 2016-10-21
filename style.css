@@ -1,0 +1,22 @@
+
+body {
+    background: #eeeeee;
+}
+.sidebar{
+    height: 100vh;
+    padding-top: 50px;
+    border-right: 1px solid #ddd;
+
+}
+.content{
+    padding-top: 100px;
+}
+.bold {
+    font-weight: 700;
+}
+li>div {
+    cursor: pointer;
+}
+.active {
+    background: #dddddd;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Test Fullstack </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+
+  <script type="text/x-template" id="folder-template">
+    <li :class="{active: isActive}">
+      <div
+              :class="{bold: hasChildren}"
+              @click="toggle"
+              @dblclick="changeType">
+        {{model.name}}
+        <span v-if="hasChildren">[{{open ? '-' : '+'}}]</span>
+      </div>
+      <ul v-show="open" v-if="hasChildren">
+        <item
+                class="item"
+                v-for="model in model.children"
+                :model="model">
+        >
+        </item>
+        <li class="add" @click="addChild">+</li>
+      </ul>
+    </li>
+  </script>
+
+  <!-- the demo root element -->
+
+  <section id="content">
+    <div class="container-fluid">
+      <div class="row">
+        <aside class="col-sm-3 sidebar">
+          <ul id="demo">
+            <item
+                    class="item"
+                    v-for="model in folders"
+                    :model="model"
+            >
+            </item>
+          </ul>
+        </aside>
+
+        <div class="col-sm-9 content">
+
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+
+
+
+    <script src="dist/build.js"></script>
+  </body>
+</html>
