@@ -1,6 +1,6 @@
 import Vue from 'vue'
+import alertify from 'alertify.js';
 import helper from './helper';
-var x = 0;
 Vue.component('item', {
   template: '#folder-template',
   props: {
@@ -18,7 +18,7 @@ Vue.component('item', {
           this.model.children.length)
     },
     isActive:function(){
-      return x == this.model.id;
+      return this.model.id == this.model.id;
     }
     
   },
@@ -28,34 +28,48 @@ Vue.component('item', {
   },
   methods: {
     toggle: function () {
-      this.$parent.active = this.model.id;
+      this.$parent.active = this.open;
       if (this.hasChildren) {
         this.open = !this.open
       }
 
-
-
-
     },
     changeType: function () {
-      if (!this.isFolder) {
-        Vue.set(this.model, 'children', [])
-        this.addChild()
-        this.open = true
-      }
+      var _this = this;
+      alertify
+      .defaultValue("")
+      .prompt("Rename folder",
+          function (val, ev) {
+            ev.preventDefault();
+            if(val)
+              _this.model.name = val;
+            alertify.success("rename folder successfully");
+
+          }, function(ev) {
+            ev.preventDefault();
+          });
     },
     addChild: function () {
 
-      var x = this.model;
+      var _this = this;
+      alertify
+      .defaultValue("New folder")
+      .prompt("Enter new folder name",
+          function (val, ev) {
+            ev.preventDefault();
 
-      x.children.push({
-        name: 'new folder',
-        parent_id:this.model.id
-      })
+            _this.model.children.push({
+              name: val,
+              parent_id:_this.model.id
+            })
 
-      Vue.set(this,'model',x)
+            alertify.success("add folder successfully");
 
-      this.$parent.folders.push({ id: '2', name: 'subfolder1', parent_id: this.model.id});
+          }, function(ev) {
+            ev.preventDefault();
+      });
+
+
 
     }
   }
@@ -65,14 +79,14 @@ new Vue({
   el: 'body',
   data: {
     folders: [
-      { id: 1, name: 'My Drive', parent_id: null },
-      { id: 2, name: 'subfolder1', parent_id: 1 },
-      { id: 3, name: 'subfolder2', parent_id: 1 },
-      { id: 4, name: 'subfolder3', parent_id: 1 },
-      { id: 5, name: 'subfolder2', parent_id: 4},
-      { id: 6, name: 'subfolder3', parent_id: 5 }
+      { id: 1, name: 'My Drive', parent_id: null ,children:null},
+      { id: 2, name: 'subfolder1', parent_id: 1  ,children:null},
+      { id: 3, name: 'subfolder2', parent_id: 1  ,children:null},
+      { id: 4, name: 'subfolder3', parent_id: 1  ,children:null},
+      { id: 5, name: 'subfolder2', parent_id: 4  ,children:null},
+      { id: 6, name: 'subfolder3', parent_id: 5  ,children:null}
     ],
-    active:''
+    active:null
   },
   ready:function(){
     Vue.set(this, 'folders', helper.convertHierarchical(this.folders))

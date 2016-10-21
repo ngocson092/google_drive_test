@@ -14,7 +14,6 @@ module.exports = {
                     children: []
                 };
             }
-            map[parent].old = 123;
             map[parent].children.push(obj);
         }
 

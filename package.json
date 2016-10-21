@@ -8,8 +8,9 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "vue": "^1.0.0",
-    "babel-runtime": "^6.0.0"
+    "alertify.js": "^1.0.12",
+    "babel-runtime": "^6.0.0",
+    "vue": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -29,6 +30,5 @@
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0",
     "lodash": "^4.14.0"
-
   }
 }
