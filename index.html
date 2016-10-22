@@ -75,6 +75,7 @@
               <div class="col-sm-3 item-folder"
                    v-for="item in currentFolderActive.children">
                 <span  v-text="item.name"></span>
+                <i  @click="removeFolder(1)">X</i>
               </div>
             </div>
         </div>

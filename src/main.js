@@ -69,38 +69,7 @@ Vue.component('item', {
 
             ev.preventDefault();
           });//end alertify
-    },
-    addFolder: function () {
-
-      var _this = this;
-      alertify
-      .defaultValue("New folder")
-      .prompt("Enter new folder name",
-          function (val, ev) {
-            ev.preventDefault();
-            
-            if(!val){
-              alertify.error("name folder not empty");
-              return;
-            }
-            
-            _this.model.children.push({
-              id: initIdAddStart,
-              name: val,
-              parent_id:_this.model.id,
-              children: {}
-            })
-            initIdAddStart++;
-            alertify.success("add folder successfully");
-
-          }, function(ev) {
-            ev.preventDefault();
-          }
-      );//end alertify
-
-
-
-    }//end addFolder
+    }
 
   }//end methods
 
@@ -128,28 +97,36 @@ new Vue({
          if(!this.currentFolderActive)
              return;
 
-
          var _this = this;
-         this.currentFolderActive.open = true;
          alertify
              .defaultValue("New folder")
              .prompt("Enter new folder name",
                  function (val, ev) {
                      ev.preventDefault();
 
+
                      if(!val){
                          alertify.error("name folder not empty");
                          return;
                      }
 
+                     /*
+                     * add folder
+                     *
+                     * */
+
+                     if(!_this.currentFolderActive.children){
+                         Vue.set(_this.$root.currentFolderActive, 'children',[]);
+                     }
                      _this.currentFolderActive.children.push({
                          id: initIdAddStart,
                          name: val,
-                         parent_id:_this.currentFolderActive.id,
-                         children:null
+                         parent_id:_this.currentFolderActive.id
                      })
+
                      initIdAddStart++;
                      alertify.success("add folder successfully");
+
 
                  }, function(ev) {
                      ev.preventDefault();
@@ -167,12 +144,19 @@ new Vue({
          Vue.set(_this.folders[i], 'children', null);
 
          /*
+         *
          * reactive properties "children"
          *
          * */
 
        });
        Vue.set(this, 'folders', helper.convertHierarchical(this.folders))
-     }
+     },
+      removeFolder(id){
+
+          this.currentFolderActive.children.$remove(2);
+
+          console.log(id)
+      }
   }
 });
