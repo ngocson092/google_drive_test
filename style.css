@@ -4,12 +4,12 @@ body {
 }
 .sidebar{
     height: 100vh;
-    padding-top: 50px;
+    padding-top: 10px;
     border-right: 1px solid #ddd;
-
 }
-.content{
-    padding-top: 100px;
+.content {
+    padding-top: 12px;
+    padding-left: 41px;
 }
 .bold {
     font-weight: 700;
@@ -25,5 +25,24 @@ ul {
     padding: 0 0 0 25px;
 }
 li.add {
+    cursor: pointer;
+}
+.item-folder span{
+    display: block;
+    height: 70px;
+    width: 100%;
+    background: #36bfe8;
+    line-height: 70px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.navbar-default{
+    margin: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+}
+.menu-top a{
     cursor: pointer;
 }

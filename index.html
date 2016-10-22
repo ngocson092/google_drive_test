@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>Test Fullstack </title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
 
 
   <script type="text/x-template" id="folder-template">
-    <li :class="{active: isActive}">
+    <li>
       <div
-              :class="{bold: hasChildren}"
+              :class="{bold: hasChildren,active: isActive}"
               @click="toggle"
-              @dblclick="changeType">
+              @dblclick="renameFolder">
         {{model.name}}
         <span v-if="hasChildren">[{{open ? '-' : '+'}}]</span>
       </div>
@@ -25,7 +25,7 @@
                 :model="model">
         >
         </item>
-        <li class="add" @click="addChild">+</li>
+        <li class="add" @click="addFolder">+</li>
       </ul>
     </li>
   </script>
@@ -35,12 +35,35 @@
   <section id="content">
     <div class="container-fluid">
       <div class="row">
+        <nav class="navbar navbar-default menu-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+
+          <div class="navbar-header col-sm-3 text-center">
+            <button type="button" class="navbar-toggle " data-toggle="collapse" data-target=".navbar-ex1-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Google Drive Test</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li v-show="currentFolderActive"><a @click="addFolder">Add Folder</a></li>
+
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </nav>
+      </div>
+      <div class="row">
         <aside class="col-sm-3 sidebar">
           <ul id="demo">
             <item
-                    class="item"
-                    v-for="model in folders"
-                    :model="model"
+                class="item"
+                v-for="model in folders"
+                :model="model"
             >
             </item>
           </ul>
@@ -48,6 +71,13 @@
 
         <div class="col-sm-9 content">
 
+
+            <div class="row">
+              <div class="col-sm-3 item-folder"
+                   v-for="item in currentFolderActive.children">
+                <span  v-text="item.name"></span>
+              </div>
+            </div>
         </div>
       </div>
     </div>
