@@ -14,12 +14,11 @@
       <div
               :class="{bold: hasChildren,active: isActive}"
               @click="toggle"
-              @dblclick="renameFolder"
+
       >
-        {{model.name}}
-        <span v-if="hasChildren">[{{open ? '-' : '+'}}]</span>
+        <span @dblclick="renameFolder" v-text="model.name"></span>
       </div>
-      <ul v-show="open" v-if="hasChildren">
+      <ul  v-if="hasChildren">
         <item
                 class="item"
                 v-for="model in model.children"
@@ -29,6 +28,16 @@
 
       </ul>
     </li>
+  </script>
+
+  <script type="text/x-template" id="inner-item-template">
+    <div class="col-sm-3 item-folder"
+         v-for="item in list_item">
+                <span  v-text="item.name"
+                       @click="selectFolder(item,$event)"
+                       @dblclick="goToThisFolder(item,$event)"
+                ></span>
+    </div>
   </script>
 
   <!-- the demo root element -->
@@ -52,15 +61,16 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
+              <li v-show="selected && selected.length == 1"><a @click="renameFolder"><span>Rename</span></a></li>
+              <li v-show="selected && selected.length"><a @click="removeFolder"><span>Delete</span></a></li>
               <li v-show="currentFolderActive"><a @click="addFolder"><span>Add Folder</span></a></li>
-
             </ul>
           </div><!-- /.navbar-collapse -->
         </nav>
       </div>
       <div class="row">
         <aside class="col-sm-3 sidebar">
-          <ul id="demo">
+          <ul>
             <item
                 class="item"
                 v-for="model in folders"
@@ -72,10 +82,16 @@
 
         <div class="col-sm-9 content">
             <div class="row" v-if="currentFolderActive && currentFolderActive.children">
-              <div class="col-sm-3 item-folder"
+
+
+              <inner-item :list_item="currentFolderActive.children"></inner-item>
+
+              <div class=" hidden col-sm-3 item-folder"
                    v-for="item in currentFolderActive.children">
-                <span  v-text="item.name"></span>
-                <i  @click="removeFolder(1)">X</i>
+                <span  v-text="item.name"
+                       @click="selectFolder($event)"
+                ></span>
+                <i  @click="removeFolder(item)">X</i>
               </div>
             </div>
         </div>
@@ -87,6 +103,7 @@
 
 
 
+    <script src="jquery.js"></script>
     <script src="dist/build.js"></script>
   </body>
 </html>

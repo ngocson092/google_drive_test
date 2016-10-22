@@ -3,9 +3,10 @@ body {
     background: #eeeeee;
 }
 .sidebar{
-    height: 100vh;
+    height: calc(100vh - 54px);
     padding-top: 10px;
     background: #f8f8f8;
+    padding-left: 0px;
     border-right: 1px solid #ddd;
 }
 .content {
@@ -30,6 +31,17 @@ ul {
 li.add {
     cursor: pointer;
 }
+
+.navbar-default{
+    margin: 0;
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+}
+.menu-top a{
+    cursor: pointer;
+    padding: 15px 15px 0 0 !important;
+}
 .item-folder span{
     display: block;
     height: 70px;
@@ -42,15 +54,6 @@ li.add {
     cursor: pointer;
     box-shadow: 3px 3px 0px #dadada;
 }
-.navbar-default{
-    margin: 0;
-    border-radius: 0;
-    border-right: 0;
-    border-left: 0;
-}
-.menu-top a{
-    cursor: pointer;
-}
 .item-folder span:before {
     content: '';
     width: 67px;
@@ -60,18 +63,56 @@ li.add {
     background: #f9e689;
     top: -10px;
     border-radius: 4px;
-}.item-folder span:after {
-     content: '';
-     width: calc(100% - 40px);
-     position: absolute;
-     height: 29px;
-     right: 17px;
-     background: #f3df7e;
-     top: -4px;
-     border-radius: 4px;
-     z-index: -1;
- }
- li.item{list-style: none}
+}
+
+.item-folder span:after {
+    content: '';
+    width: calc(100% - 40px);
+    position: absolute;
+    height: 29px;
+    right: 17px;
+    background: #f3df7e;
+    top: -4px;
+    border-radius: 4px;
+    z-index: -1;
+}
+
+.item-folder.selected span{
+    display: block;
+    height: 70px;
+    width: 100%;
+    background: #89dff9;
+    line-height: 70px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px #928f8f;
+}
+.item-folder.selected span:before {
+    content: '';
+    width: 67px;
+    position: absolute;
+    height: 29px;
+    right: 15px;
+    background: #89dff9;
+    top: -10px;
+    border-radius: 4px;
+}
+
+.item-folder.selected span:after {
+    content: '';
+    width: calc(100% - 40px);
+    position: absolute;
+    height: 29px;
+    right: 17px;
+    background: #7cc9e0;
+    top: -4px;
+    border-radius: 4px;
+    z-index: -1;
+}
+
+li.item{list-style: none}
 .menu-top a span {
     background: #12bdf1;
     color: white;

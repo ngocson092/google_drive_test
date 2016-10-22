@@ -11,7 +11,6 @@ Vue.component('item', {
   },
   data: function () {
     return {
-      open:false
     }
   },
   computed: {
@@ -24,9 +23,9 @@ Vue.component('item', {
 
       return !!(this.model.children &&
           this.model.children.length)
+
     },
     isActive(){
-
         if(this.$root.currentFolderActive && this.$root.currentFolderActive.id){
             return this.$root.currentFolderActive.id == this.model.id;
         }
@@ -37,13 +36,10 @@ Vue.component('item', {
   },
   ready(){
 
-
   },
   methods: {
     toggle: function () {
-      if (this.hasChildren) {
-        this.open = !this.open
-      }
+      this.$root.selected = [];
       Vue.set(this.$root, 'currentFolderActive',this.model);
     },
     renameFolder: function () {
@@ -70,7 +66,46 @@ Vue.component('item', {
             ev.preventDefault();
           });//end alertify
     }
+  }//end methods
+});
 
+Vue.component('inner-item', {
+  template: '#inner-item-template',
+  props: {
+      list_item: {}
+  },
+  data: function () {
+    return {
+      selected:[]
+    }
+  },
+  computed: {
+
+
+    
+  },
+  ready(){
+
+
+  },
+  methods: {
+
+    selectFolder(item,e){
+
+        if(_.some(this.$root.selected,{'id':item.id})){
+            //toggle push item to selected
+            this.$root.selected.$remove(item);
+        }else{
+            this.$root.selected.push(item);
+        }
+        $(e.target).closest('.item-folder').toggleClass('selected');
+
+
+    },
+    goToThisFolder(item,e){
+          this.$root.currentFolderActive = item;
+        this.$root.currentFolderActive.open = true;
+    }
   }//end methods
 
 
@@ -87,10 +122,13 @@ new Vue({
       { id: 6, name: 'subfolder5', parent_id: 5  },
       { id: 5, name: 'subfolder4', parent_id: 4  }
     ],
-    currentFolderActive:null
+    currentFolderActive:null,
+    selected:null
   },
   ready:function(){
     this.convertData();
+
+
   },
   methods:{
      addFolder(){
@@ -152,11 +190,56 @@ new Vue({
        });
        Vue.set(this, 'folders', helper.convertHierarchical(this.folders))
      },
-      removeFolder(id){
+      removeFolder(){
+          var _this = this;
+          _.forEach(this.selected,function(v){
+              _this.currentFolderActive.children.$remove(v);
+          });
 
-          this.currentFolderActive.children.$remove(2);
+          //set selected is empty after remove them
+          this.selected = [];
+      },
+      renameFolder(){
 
-          console.log(id)
+          var _this = this;
+          var selectFolder = this.selected.pop();
+          alertify
+              .defaultValue(selectFolder.name)
+              .prompt("Rename folder",
+                  function (val, ev) {
+                      ev.preventDefault();
+
+                      if(!val){
+                          alertify.error("name folder not empty");
+                          return;
+                      }else if(val==_this.currentFolderActive.name){
+                          //name not change
+                          return;
+                      }
+
+                        /*
+                        * do rename
+                        * */
+
+                      _this.currentFolderActive.children.$remove(selectFolder);
+                      selectFolder.name = val;
+                      _this.currentFolderActive.children.push(selectFolder);
+
+
+
+                  }, function(ev) {
+                      //cancel function goes here
+
+                      ev.preventDefault();
+                  });//end alertify
+
+
+
+
+
+
       }
+
+
   }
 });
