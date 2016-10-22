@@ -5,10 +5,11 @@ body {
 .sidebar{
     height: 100vh;
     padding-top: 10px;
+    background: #f8f8f8;
     border-right: 1px solid #ddd;
 }
 .content {
-    padding-top: 12px;
+    padding-top: 21px;
     padding-left: 41px;
 }
 .bold {
@@ -16,13 +17,15 @@ body {
 }
 li>div {
     cursor: pointer;
+    padding: 5px;
+    border-radius: 2px;
 }
 .active {
-    background: #dddddd;
+    background: #eeeeee;
 }
 ul {
     margin-bottom: 0;
-    padding: 0 0 0 25px;
+    padding: 0 0 0 14px;
 }
 li.add {
     cursor: pointer;
@@ -31,11 +34,13 @@ li.add {
     display: block;
     height: 70px;
     width: 100%;
-    background: #36bfe8;
+    background: #f9e689;
     line-height: 70px;
     text-align: center;
     border-radius: 5px;
     margin-bottom: 20px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px #dadada;
 }
 .navbar-default{
     margin: 0;
@@ -45,4 +50,31 @@ li.add {
 }
 .menu-top a{
     cursor: pointer;
+}
+.item-folder span:before {
+    content: '';
+    width: 67px;
+    position: absolute;
+    height: 29px;
+    right: 15px;
+    background: #f9e689;
+    top: -10px;
+    border-radius: 4px;
+}.item-folder span:after {
+     content: '';
+     width: calc(100% - 40px);
+     position: absolute;
+     height: 29px;
+     right: 17px;
+     background: #f3df7e;
+     top: -4px;
+     border-radius: 4px;
+     z-index: -1;
+ }
+ li.item{list-style: none}
+.menu-top a span {
+    background: #12bdf1;
+    color: white;
+    padding: 7px 10px;
+    border-radius: 3px;
 }

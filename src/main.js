@@ -127,14 +127,37 @@ new Vue({
      addFolder(){
          if(!this.currentFolderActive)
              return;
-          this.currentFolderActive.children.push({
-             id: initIdAddStart,
-             name: 'new folder',
-             parent_id:this.currentFolderActive.id,
-             children:null
-         })
-         console.log(this.currentFolderActive.children);
-         initIdAddStart++;
+
+
+         var _this = this;
+         this.currentFolderActive.open = true;
+         alertify
+             .defaultValue("New folder")
+             .prompt("Enter new folder name",
+                 function (val, ev) {
+                     ev.preventDefault();
+
+                     if(!val){
+                         alertify.error("name folder not empty");
+                         return;
+                     }
+
+                     _this.currentFolderActive.children.push({
+                         id: initIdAddStart,
+                         name: val,
+                         parent_id:_this.currentFolderActive.id,
+                         children:null
+                     })
+                     initIdAddStart++;
+                     alertify.success("add folder successfully");
+
+                 }, function(ev) {
+                     ev.preventDefault();
+                 }
+             );//end alertify
+
+
+
       },   
      convertData(){
        var _this = this;

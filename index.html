@@ -14,7 +14,8 @@
       <div
               :class="{bold: hasChildren,active: isActive}"
               @click="toggle"
-              @dblclick="renameFolder">
+              @dblclick="renameFolder"
+      >
         {{model.name}}
         <span v-if="hasChildren">[{{open ? '-' : '+'}}]</span>
       </div>
@@ -25,7 +26,7 @@
                 :model="model">
         >
         </item>
-        <li class="add" @click="addFolder">+</li>
+
       </ul>
     </li>
   </script>
@@ -51,7 +52,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li v-show="currentFolderActive"><a @click="addFolder">Add Folder</a></li>
+              <li v-show="currentFolderActive"><a @click="addFolder"><span>Add Folder</span></a></li>
 
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -70,9 +71,7 @@
         </aside>
 
         <div class="col-sm-9 content">
-
-
-            <div class="row">
+            <div class="row" v-if="currentFolderActive && currentFolderActive.children">
               <div class="col-sm-3 item-folder"
                    v-for="item in currentFolderActive.children">
                 <span  v-text="item.name"></span>
