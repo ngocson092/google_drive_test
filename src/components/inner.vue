@@ -10,7 +10,9 @@
 
 </template>
 <style>
-
+    ul[dnd-list], ul[dnd-list] > li {
+        position: relative;
+    }
 </style>
 <script>
 

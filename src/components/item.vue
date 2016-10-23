@@ -5,6 +5,8 @@
                 @click="toggle"
         >
             <span @dblclick="renameFolder" v-text="model.name"></span>
+            <i v-if="hasChildren" class="fa fa-caret-down" aria-hidden="true"></i>
+
         </div>
         <ul  v-if="hasChildren">
             <item

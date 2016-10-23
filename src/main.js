@@ -5,8 +5,9 @@ import alertify from 'alertify.js';
 import helper from './helper';
 
 
-
 var initIdAddStart = 30;
+//when user add new folder , id folder will start initIdAddStart
+
 
 Vue.component('item', require('./components/item.vue'));
 Vue.component('inner', require('./components/inner.vue'));
