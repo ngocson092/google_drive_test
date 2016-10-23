@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import _ from 'lodash';
-window.$ = require('jquery');
-import alertify from 'alertify.js';
 import helper from './helper';
+window.$ = require('jquery');
+window.alertify  = require('alertify.js');
+
 
 
 var initIdAddStart = 30;
@@ -127,8 +128,7 @@ new Vue({
                       //get index of object in children
 
                       _this.currentFolderActive.children[index] = _.merge(selectFolder, {name: val});
-
-
+                      alertify.success("rename folder successfully");
                      $('.selected').removeClass('selected');
 
                   }, function(ev) {
