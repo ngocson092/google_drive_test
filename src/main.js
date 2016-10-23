@@ -25,7 +25,7 @@ new Vue({
     ],
       
     currentFolderActive:null, // currentFolderActive is Highlight folder
-    selected:null // when user click on right content to select folder, selected will store them
+    selected:[] // when user click on right content to select folder, selected will store them
   },
   ready:function(){
     this.convertData();
