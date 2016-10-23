@@ -1,8 +1,0 @@
-[
-  { id: 1, name: 'My Drive', parent_id: null },
-  { id: 4, name: 'subfolder3', parent_id: 1  },
-  { id: 2, name: 'subfolder1', parent_id: 1  },
-  { id: 3, name: 'subfolder2', parent_id: 1  },
-  { id: 6, name: 'subfolder5', parent_id: 5  },
-  { id: 5, name: 'subfolder4', parent_id: 4  }
-]
