@@ -2,7 +2,7 @@ import Vue from 'vue'
 import _ from 'lodash';
 import alertify from 'alertify.js';
 import helper from './helper';
-var initIdAddStart = 100;
+var initIdAddStart = 30;
 
 Vue.component('item', {
   template: '#folder-template',
@@ -221,22 +221,19 @@ new Vue({
                         * do rename
                         * */
 
-                      _this.currentFolderActive.children.$remove(selectFolder);
-                      selectFolder.name = val;
-                      _this.currentFolderActive.children.push(selectFolder);
+                      var index = _this.currentFolderActive.children.indexOf(selectFolder);
+                      //get index of object in children
+
+                      _this.currentFolderActive.children[index] = _.merge(selectFolder, {name: val});
 
 
+                     $('.selected').removeClass('selected');
 
                   }, function(ev) {
                       //cancel function goes here
 
                       ev.preventDefault();
                   });//end alertify
-
-
-
-
-
 
       }
 
