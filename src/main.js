@@ -6,7 +6,8 @@ import helper from './helper';
 
 
 var initIdAddStart = 30;
-//when user add new folder , id folder will start initIdAddStart
+//when user add new folder , id folder will start initIdAddStart 
+// and then initIdAddStart will be increase 1
 
 
 Vue.component('item', require('./components/item.vue'));
