@@ -1,115 +1,15 @@
 import Vue from 'vue'
 import _ from 'lodash';
+window.$ = require('jquery');
 import alertify from 'alertify.js';
 import helper from './helper';
+
+
+
 var initIdAddStart = 30;
 
-Vue.component('item', {
-  template: '#folder-template',
-  props: {
-    model: Object
-  },
-  data: function () {
-    return {
-    }
-  },
-  computed: {
-
-    hasChildren() {
-
-      /*
-      * check item has children
-      * */
-
-      return !!(this.model.children &&
-          this.model.children.length)
-
-    },
-    isActive(){
-        if(this.$root.currentFolderActive && this.$root.currentFolderActive.id){
-            return this.$root.currentFolderActive.id == this.model.id;
-        }
-        return false;
-
-    }
-    
-  },
-  ready(){
-
-  },
-  methods: {
-    toggle: function () {
-      this.$root.selected = [];
-      Vue.set(this.$root, 'currentFolderActive',this.model);
-    },
-    renameFolder: function () {
-      var _this = this;
-      alertify
-      .defaultValue(_this.model.name)
-      .prompt("Rename folder",
-          function (val, ev) {
-            ev.preventDefault();
-
-            if(!val){
-              alertify.error("name folder not empty");
-              return;
-            }else if(val==_this.model.name){
-              //name not change
-              return;
-            }
-            _this.model.name = val;  
-            alertify.success("rename folder successfully");
-
-          }, function(ev) {
-            //cancel function goes here
-
-            ev.preventDefault();
-          });//end alertify
-    }
-  }//end methods
-});
-
-Vue.component('inner-item', {
-  template: '#inner-item-template',
-  props: {
-      list_item: {}
-  },
-  data: function () {
-    return {
-      selected:[]
-    }
-  },
-  computed: {
-
-
-    
-  },
-  ready(){
-
-
-  },
-  methods: {
-
-    selectFolder(item,e){
-
-        if(_.some(this.$root.selected,{'id':item.id})){
-            //toggle push item to selected
-            this.$root.selected.$remove(item);
-        }else{
-            this.$root.selected.push(item);
-        }
-        $(e.target).closest('.item-folder').toggleClass('selected');
-
-
-    },
-    goToThisFolder(item,e){
-          this.$root.currentFolderActive = item;
-        this.$root.currentFolderActive.open = true;
-    }
-  }//end methods
-
-
-})
+Vue.component('item', require('./components/item.vue'));
+Vue.component('inner', require('./components/inner.vue'));
 
 new Vue({
   el: 'body',
@@ -122,16 +22,16 @@ new Vue({
       { id: 6, name: 'subfolder5', parent_id: 5  },
       { id: 5, name: 'subfolder4', parent_id: 4  }
     ],
-    currentFolderActive:null,
-    selected:null
+      
+    currentFolderActive:null, // currentFolderActive is Highlight folder
+    selected:null // when user click on right content to select folder, selected will store them
   },
   ready:function(){
     this.convertData();
 
-
   },
   methods:{
-     addFolder(){
+      addFolder(){
          if(!this.currentFolderActive)
              return;
 
@@ -174,7 +74,7 @@ new Vue({
 
 
       },   
-     convertData(){
+      convertData(){
        var _this = this;
 
        _.forEach(_this.folders, function(value,i) {
@@ -236,7 +136,7 @@ new Vue({
                   });//end alertify
 
       }
-
-
   }
+
 });
+
