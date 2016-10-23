@@ -49,17 +49,7 @@
       <div class="col-sm-9 content">
         <div class="row" v-if="currentFolderActive && currentFolderActive.children">
           <inner :list_item="currentFolderActive.children"></inner>
-          <div class=" hidden col-sm-3 item-folder"
-               v-for="item in currentFolderActive.children">
-                  <span  v-text="item.name"
-                         @click="selectFolder($event)"
-                  ></span>
-            <i  @click="removeFolder(item)">X</i>
-          </div>
         </div>
-
-
-
       </div>
     </div>
   </div>
