@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-3 item-folder"
+    <div class="col-sm-2 item-folder"
          v-for="item in list_item">
         <span  v-text="item.name"
                @click="selectFolder(item,$event)"
